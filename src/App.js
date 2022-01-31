@@ -2,34 +2,50 @@ import Auth from "./pages/forms/auth";
 import { Container, Row, Col } from "reactstrap";
 import React from "react";
 import Dashboard from "./pages/Dashboard/dashboard";
-import LocalStorage from "./components/helpers/storages/localStorage";
+
+import { ContactsProvider } from "./store/context/contacts";
+import { ConversationsContextProvider } from "./store/context/conversations";
+
+import { SocketContextProvider } from "./helper/socket";
+
+
 
 class App extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = { id: null };
   }
   componentDidMount() {
-    const item = new LocalStorage('id')
-    const username = item.storage()
-    this.setState({ id: username });
+    let username = localStorage.getItem("id")
+    if(username !=null){
+      username = JSON.parse(username)
+      this.setState({ id: username.id});
+    }
+    
   }
   submitPrivatDat(data) {
-    this.setState({ id: data.username });
-    localStorage.setItem("id", data.username);
+    this.setState({id:data.id});
+    localStorage.setItem("id", JSON.stringify({id:data.id, name:data.username}))
   }
 
   render() {
-    console.log(this.state.id);
+    const { id } = this.state;
+    console.log(id)
     return (
       <Container>
-    
-            {this.state.id ? (
-              <Dashboard />
-            ) : (
-              <Auth onSubmit={this.submitPrivatDat.bind(this)} />
-            )}
-     
+        {id ? (
+          <SocketContextProvider id={id}>
+            <ContactsProvider>
+              <ConversationsContextProvider>
+                {" "}
+                <Dashboard />
+              </ConversationsContextProvider>
+            </ContactsProvider>
+          </SocketContextProvider>
+        ) : (
+          <Auth onSubmit={this.submitPrivatDat.bind(this)} />
+        )}
       </Container>
     );
   }

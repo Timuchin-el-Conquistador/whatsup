@@ -6,17 +6,12 @@ import {
   Nav,
   NavItem,
   NavLink,
-  Card,
   Button,
-  CardTitle,
-  CardText,
-  Row,
-  Col,
-  Tab,
   Container,
   Modal,
 } from "reactstrap";
 import classnames from "classnames";
+import classes from './index.module.css'
 
 import Conversations from "../../../components/dashboards/Conversations/conversations";
 import Contacts from "../../../components/dashboards/Contacts/contacts";
@@ -24,10 +19,13 @@ import Contacts from "../../../components/dashboards/Contacts/contacts";
 import NewConversations from "../../../components/newConversations";
 import NewContacts from "../../../components/newContacts";
 
+import socketContextApi from "../../../helper/socket";
+
 const CONVERSATIONS = "conversations";
 const CONTACTS = "contacts";
 
 export default class Sidebar extends React.Component {
+  static contextType = socketContextApi
   constructor(props) {
     super(props);
 
@@ -38,6 +36,7 @@ export default class Sidebar extends React.Component {
     };
     this.toggle = this.toggle.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
+    this.socket = null
   }
 
   toggle(tab) {
@@ -54,19 +53,36 @@ export default class Sidebar extends React.Component {
       modal: !this.state.modal,
     });
   }
+
+  exitMode =() => {
+    const {socket} = this.context
+    const user = JSON.parse(localStorage.getItem('id'))
+    socket.emit('offline', {query: {id: user.id}})
+    window.location.reload()
+    localStorage.clear('id')
+  }
+
+
+  componentDidUpdate(){
+    const {socket} = this.context
+    this.socket = socket.on('status', data => {
+      console.log(data)
+    })
+  }
   render() {
+    const {active} = this.props
     return (
-      <div>
+      <React.Fragment>
         <Container
-          style={{ width: "300px", height: "100%" }}
+          style={{ width: `${!active.display ? "252.9px" :'322px'}`, height: "100%" }}
           className="d-flex flex-column"
         >
           <Nav tabs>
             <NavItem>
               <NavLink
-                className={classnames({
+                className={`${classnames({
                   active: this.state.activeTab === CONVERSATIONS,
-                })}
+                })} ${classes.tab_hover}`}
                 onClick={() => {
                   this.toggle(CONVERSATIONS);
                 }}
@@ -76,9 +92,9 @@ export default class Sidebar extends React.Component {
             </NavItem>
             <NavItem>
               <NavLink
-                className={classnames({
-                  active: this.state.activeTab === CONTACTS,
-                })}
+                  className={`${classnames({
+                    active: this.state.activeTab === CONTACTS,
+                  })} ${classes.tab_hover}`}
                 onClick={() => {
                   this.toggle(CONTACTS);
                 }}
@@ -103,10 +119,13 @@ export default class Sidebar extends React.Component {
             onClick={this.toggleModal}
             className={this.props.className}
           >
-            New
-            {this.state.activeTab === CONVERSATIONS
+            {`New 
+            ${ this.state.activeTab === CONVERSATIONS
               ? "Conversations"
-              : "Contacts"}
+              : "Contacts"}`}
+          </Button>
+          <Button color="danger" className={this.props.className} onClick={this.exitMode}>
+            Exit
           </Button>
         </Container>
         <Modal isOpen={this.state.modal} toggle={this.toggleModal}>
@@ -116,7 +135,7 @@ export default class Sidebar extends React.Component {
             <NewContacts toggle={this.toggleModal} />
           )}
         </Modal>
-      </div>
+      </React.Fragment>
     );
   }
 }

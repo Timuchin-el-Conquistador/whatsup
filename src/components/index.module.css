@@ -1,0 +1,9 @@
+.contacts{
+    display: flex;
+    justify-content: space-between;
+}
+
+.contact_add{
+ color: blue;
+ cursor: pointer;
+}

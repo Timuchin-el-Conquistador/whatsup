@@ -1,0 +1,18 @@
+
+.list_item{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+.list_item:hover{
+    cursor: pointer;
+}
+
+.dlt_btn{
+    color:red;
+
+}
+
+.dlt_btn:hover{
+    cursor: pointer;
+}

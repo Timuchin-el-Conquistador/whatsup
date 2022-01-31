@@ -2,23 +2,15 @@
 
 
 class LocalStorage {
-    constructor(key){
-        this.items = localStorage.getItem(key)
+
+    static returnContacts(key){
+         const contacts = localStorage.getItem(key)
+         return JSON.parse(contacts)
     }
-
-
-
-    storage (){
-        if(this.items){
-            return this.items
-        }
+    static setContacts({key, data}){
+        console.log(key,data)
+        localStorage.setItem(key, JSON.stringify(data))
     }
-
-    setStorage (key, data){
-        localStorage.setItem(key, data)
-    }
-
-  
 }
 
 export default LocalStorage

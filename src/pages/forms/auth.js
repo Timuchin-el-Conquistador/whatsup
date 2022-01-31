@@ -1,14 +1,16 @@
 import { Form, Input, Button, Checkbox } from "antd";
 import React from "react";
 
-class Auth extends React.Component{
-  constructor(props){
-      super(props)
-  }
+class Auth extends React.Component {
+ constructor(props){
+     super(props)
+ }
+
   render() {
     const onFinish = (values) => {
       console.log("Success:", values);
-      this.props.onSubmit(values)
+      this.props.onSubmit(values);
+  
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -45,8 +47,8 @@ class Auth extends React.Component{
         </Form.Item>
 
         <Form.Item
-          label="Password"
-          name="password"
+          label="id"
+          name="id"
           rules={[
             {
               required: true,
@@ -83,4 +85,4 @@ class Auth extends React.Component{
   }
 }
 
-export default Auth
+export default Auth;

@@ -1,0 +1,10 @@
+
+.list_item{
+  
+    margin-top: 1rem;
+
+}
+
+.list_item:hover{
+    cursor: pointer;
+}

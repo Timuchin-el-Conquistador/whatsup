@@ -1,0 +1,41 @@
+.convers_container {
+  border: 1px solid blue;
+}
+
+.convers_title {
+  display: flex;
+  justify-content: center;
+}
+
+.btn_new_convers {
+  position: absolute;
+  right: 1.2rem;
+  top: 0.4rem;
+  border: transparent;
+  background-color: transparent;
+}
+
+
+.message{
+  background-color: #0d6efd;
+  color:white;
+  margin: 0 1rem;
+  padding: 0.3rem 0.5rem 0.3rem 0.5rem;
+  
+}
+
+.author{
+  display: flex;
+  justify-content: flex-end;
+  color: #0d6efd;
+  font-size: 13px;
+  align-items: flex-start;
+}
+
+.author_else{
+  display: flex;
+  justify-content: flex-start;
+  color: #0d6efd;
+  font-size: 13px;
+  align-items: flex-start;
+}
