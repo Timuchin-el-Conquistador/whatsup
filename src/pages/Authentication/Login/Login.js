@@ -1,23 +1,39 @@
 import { Form, Input, Button, Checkbox } from "antd";
 import React from "react";
 
-class Auth extends React.Component {
+import './index.css'
+
+import { LoginUser } from "../../../stores/actions";
+
+import {connect} from 'react-redux'
+import Navbar from "../../../components/Authentication/Navbar/index";
+
+import { withRouter } from "react-router-dom";
+
+class Login extends React.Component {
  constructor(props){
      super(props)
  }
 
   render() {
+    console.log(this.props)
+    const {LoginUser} = this.props
     const onFinish = (values) => {
       console.log("Success:", values);
-      this.props.onSubmit(values);
+      //this.props.onSubmit(values);
+      LoginUser(values)
   
     };
 
     const onFinishFailed = (errorInfo) => {
       console.log("Failed:", errorInfo);
     };
-
+    
+    console.log(this.props)
     return (
+      <React.Fragment>
+      <Navbar/>
+      <div style={{height:'100vh'}} className=" d-flex justify-content-center align-items-center ">
       <Form
         name="basic"
         labelCol={{
@@ -36,6 +52,7 @@ class Auth extends React.Component {
         <Form.Item
           label="Username"
           name="username"
+          className="login-eye"
           rules={[
             {
               required: true,
@@ -47,8 +64,9 @@ class Auth extends React.Component {
         </Form.Item>
 
         <Form.Item
-          label="id"
-          name="id"
+          label="Password"
+          className="login-eye"
+          name='password'
           rules={[
             {
               required: true,
@@ -56,19 +74,9 @@ class Auth extends React.Component {
             },
           ]}
         >
-          <Input.Password />
+          <Input.Password  className='login-eye'/>
         </Form.Item>
 
-        <Form.Item
-          name="remember"
-          valuePropName="checked"
-          wrapperCol={{
-            offset: 8,
-            span: 16,
-          }}
-        >
-          <Checkbox>Remember me</Checkbox>
-        </Form.Item>
 
         <Form.Item
           wrapperCol={{
@@ -76,13 +84,15 @@ class Auth extends React.Component {
             span: 16,
           }}
         >
-          <Button type="primary" htmlType="submit">
-            Submit
+          <Button type="primary" htmlType="submit" className="antd-button">
+            Continues
           </Button>
         </Form.Item>
       </Form>
+      </div>
+      </React.Fragment>
     );
   }
 }
 
-export default Auth;
+export default withRouter(connect(null, {LoginUser})(Login))

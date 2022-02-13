@@ -1,0 +1,25 @@
+
+
+
+.auth_container ul li{
+    list-style: none;
+    margin-left: 1rem;
+}
+
+.auth_container ul li a{
+    text-decoration: none;
+}
+
+.auth_container ul li:last-child{
+    border: 1px green solid;
+    padding: .2rem 2rem;
+    cursor: pointer;
+}
+
+ .auth_item:last-child:hover.auth_item,
+ .auth_item:last-child:hover a{
+   color: white;
+
+    background-color: green;
+}
+

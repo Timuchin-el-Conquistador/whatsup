@@ -1,0 +1,44 @@
+
+
+
+.login-eye  .ant-input-password, #basic_username{
+    position: relative;
+}
+
+.login-eye .ant-input-suffix .ant-input-password-icon{ 
+    position: absolute;
+    right: .4rem;
+    top: .2rem
+}
+
+.login-eye .ant-input{
+    background-color: white;
+    outline: none;
+    padding: .3rem .2rem;
+    border-radius: 10%;
+   width: 300px;
+   margin-bottom: 1rem;
+}
+
+.login-eye .ant-input:hover{
+    border-color: green;
+}
+
+.login-eye .ant-form-item-required{
+    color: blue;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.antd-button{
+ position: relative;
+ width:100%;
+background-color: green;
+color: white;
+outline: none;
+border-color: transparent;
+}
+
+.antd-button span{
+    width: 100%;
+}
